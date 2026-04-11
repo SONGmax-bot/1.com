@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع  امتحانات </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0c0a2a 100%);
+            color: #f1f5f9;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* header */
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(8px);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #f5af19, #f12711);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header p {
+            color: #94a3b8;
+            margin-top: 10px;
+        }
+
+        .warning-banner {
+            background: #dc2626;
+            padding: 12px;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 0.85rem;
+            margin-bottom: 30px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* شبكة المواد */
+        .subjects-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .subject-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-8px);
+            border-color: #f97316;
+            background: rgba(30, 41, 59, 0.9);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.5);
+        }
+
+        .subject-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .subject-card h3 {
+            font-size: 1.6rem;
+            color: #ffb347;
+            margin-bottom: 10px;
+        }
+
+        .subject-card p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .exam-btn {
+            margin-top: 15px;
+            background: #f97316;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .subject-card:hover .exam-btn {
+            background: #ea580c;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #475569;
+            font-size: 0.75rem;
+            border-top: 1px solid #334155;
+        }
+
+        /* تخصيص الإشعار (toast) */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1e293b;
+            border-radius: 60px;
+            padding: 0;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            border: 1px solid #f97316;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .toast-content p {
+            color: white;
+            font-size: 1rem;
+        }
+
+        .toast-content p span {
+            color: #f97316;
+            font-weight: bold;
+        }
+
+        .toast-btn {
+            background: #f97316;
+            border: none;
+            padding: 8px 25px;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .toast-btn:hover {
+            background: #ea580c;
+        }
+
+        @media (max-width: 640px) {
+            .header h1 { font-size: 1.8rem; }
+            .toast-content { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>موقع   امتحانات </h1>
+    <p>اختر المادة الدراسية لبدء الاختبار</p>
+</div>
+
+
+
+<div class="subjects-grid">
+    <!-- الرياضيات -->
+    <div class="subject-card" data-subject="الرياضيات">
+        <div class="subject-icon">📐</div>
+        <h3>الرياضيات</h3>
+        <p>الجبر - الهندسة - التفاضل والتكامل</p>
+        <button class="exam-btn">📝 دخول الامتحان</button>
+    </div>
+
+    <!-- الفيزياء -->
+    <div class="subject-card" data-subject="الفيزياء">
+        <div class="subject-icon">⚡</div>
+        <h3>الفيزياء</h3>
+        <p>الميكانيكا - الكهرباء - المغناطيسية</p>
+        <button class="exam-btn">📝 دخول الامتحان</button>
+    </div>
+
+    <!-- الكيمياء -->
+    <div class="subject-card" data-subject="الكيمياء">
+        <div class="subject-icon">🧪</div>
+        <h3>الكيمياء</h3>
+        <p>عضوية - غير عضوية - تحليلية</p>
+        <button class="exam-btn">📝 دخول الامتحان</button>
+    </div>
+
+    <!-- الأحياء -->
+    <div class="subject-card" data-subject="الأحياء">
+        <div class="subject-icon">🧬</div>
+        <h3>الأحياء</h3>
+        <p>خلية - وراثة - تشريح</p>
+        <button class="exam-btn">📝 دخول الامتحان</button>
+    </div>
+
+    <!-- اللغة العربية -->
+    <div class="subject-card" data-subject="اللغة العربية">
+        <div class="subject-icon">📖</div>
+        <h3>اللغة العربية</h3>
+        <p>نحو - بلاغة - أدب</p>
+        <button class="exam-btn">📝 دخول الامتحان</button>
+    </div>
+
+    <!-- التاريخ -->
+    <div class="subject-card" data-subject="التاريخ">
+        <div class="subject-icon">🏛️</div>
+        <h3>التاريخ</h3>
+        <p>تاريخ قديم - حديث - إسلامي</p>
+        <button class="exam-btn">📝 دخول الامتحان</button>
+    </div>
+
+    <!-- الجغرافيا -->
+    <div class="subject-card" data-subject="الجغرافيا">
+        <div class="subject-icon">🌍</div>
+        <h3>الجغرافيا</h3>
+        <p>طبيعية - بشرية - خرائط</p>
+        <button class="exam-btn">📝 دخول الامتحان</button>
+    </div>
+
+    <!-- علوم حاسوب -->
+    <div class="subject-card" data-subject="علوم الحاسوب">
+        <div class="subject-icon">💻</div>
+        <h3>علوم الحاسوب</h3>
+        <p>برمجة - قواعد بيانات - شبكات</p>
+        <button class="exam-btn">📝 دخول الامتحان</button>
+    </div>
+</div>
+
+<footer>
+    ⚖️ نظام تعليمي وهمي لأغراض التوعية - جميع البيانات خيالية<br>
+    هذا الموقع لا يحتوي على أي تسريبات حقيقية للامتحانات
+</footer>
+
+<!-- الإشعار المنبثق (Toast Notification) -->
+<div id="loginToast" class="toast-notification">
+    <div class="toast-content">
+        <p>🔐 <span>تنبيه:</span> قم بتسجيل الدخول أولاً للوصول إلى محتوى الامتحانات</p>
+        <button id="goToLoginBtn" class="toast-btn">تسجيل الدخول الآن</button>
+    </div>
+</div>
+
+<script>
+    // الحصول على جميع بطاقات المواد
+    const subjectCards = document.querySelectorAll('.subject-card');
+    const toast = document.getElementById('loginToast');
+    const goToLoginBtn = document.getElementById('goToLoginBtn');
+
+    // إظهار الإشعار
+    function showToast() {
+        toast.classList.add('show');
+        // إخفاء الإشعار تلقائياً بعد 4 ثواني
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 4000);
+    }
+
+    // إضافة حدث الضغط على كل مادة (سواء ضغط على البطاقة أو الزر)
+    subjectCards.forEach(card => {
+        const btn = card.querySelector('.exam-btn');
+        const cardDiv = card;
+        
+        // عند الضغط على الزر
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const subjectName = card.getAttribute('data-subject');
+            console.log(`تم اختيار مادة: ${subjectName}`);
+            showToast();
+        });
+        
+        // عند الضغط على البطاقة نفسها
+        cardDiv.addEventListener('click', (e) => {
+            if (e.target !== btn) {
+                const subjectName = card.getAttribute('data-subject');
+                console.log(`تم اختيار مادة: ${subjectName}`);
+                showToast();
+            }
+        });
+    });
+
+    // زر "تسجيل الدخول الآن" داخل الإشعار يحول إلى 0.html
+    goToLoginBtn.addEventListener('click', () => {
+        window.location.href = "0.html";
+    });
+
+    // منع النسخ والنقر الأيمن للتوعية
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        console.log("موقع توعوي - لا توجد تسريبات حقيقية");
+    });
+
+    console.log("%c🚨 موقع توعوي تعليمي - لا توجد تسريبات حقيقية للامتحانات", "color: #f97316; font-size: 14px");
+</script>
+
+</body>
+</html>

